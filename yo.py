@@ -253,6 +253,14 @@ class RealArm:
     token = "9860875610"
 
     @staticmethod
+    def get_stats():
+        r = requests.get(
+            "https://comengmath.herokuapp.com/get_state",
+            headers={"Authorization": __class__.token},
+        )
+        return r.json()
+
+    @staticmethod
     def get_id(tweaks: List[int]):
         return "".join(str(t) for t in tweaks)
 
@@ -298,7 +306,7 @@ class RealArm:
         return self.id == __o.id
 
     def __repr__(self):
-        return f"[{','.join(self.id)}]: {self.impressions=} {self.actions=}"
+        return f"[{','.join(self.id)}]: {self.impressions=} {self.actions=} rate={self.get_rate()}"
 
 
 def get_all_possible_tweaks() -> List[RealArm]:
@@ -331,7 +339,12 @@ def get_all_arms(states: dict) -> List[RealArm]:
         arms.append(RealArm(id, state["impressions"], state["actions"]))
     return arms
 
-# def 
+
+def print_probs(arms, probs_select_each_arm):
+    for arm, prob in sorted(
+        zip(arms, probs_select_each_arm), key=lambda e: e[0].get_rate()
+    ):
+        print(f"{arm=} prob_of_being_selected={prob}")
 
 
 def main():
@@ -348,14 +361,27 @@ def main():
     arms = get_all_arms(states)
     agent = BanditAgent()
 
-    old_t = states["t"]
-    pull_per_arm = 100
-    for t in range(old_t, old_t + pull_per_arm):
-        probs_select_each_arm = agent.softmax([arm.get_state() for arm in arms], t, 3)
-        print(probs_select_each_arm)
-        selected_arm = np.random.choice(arms, p=probs_select_each_arm)
-        result = selected_arm.pull()
-        print(f"{t=} {selected_arm=} {result=}")
+    # old_t = states["t"]
+    # pull_per_arm = 44
+    # for t in range(old_t, old_t + pull_per_arm):
+        # states = [arm.get_state() for arm in arms]
+
+        # probs_select_each_arm = agent.softmax(states, t, 2, 0.04)
+        # probs_select_each_arm = agent.equal_weights(states)
+        # probs_select_each_arm = agent.eps_greedy(states, t, 0.5, 0.4)
+        # probs_select_each_arm = agent.ucb(states, t)
+
+        # selected_arm = np.random.choice(arms, p=probs_select_each_arm)
+
+        # print_probs(arms, probs_select_each_arm)
+
+        # result = selected_arm.pull()
+        # print(f"{t=} {selected_arm=} {result=}")
+
+    print(RealArm.get_stats())
+
+    for arm in sorted(arms, key=lambda a: a.get_rate()):
+        print(arm)
 
 
 if __name__ == "__main__":
