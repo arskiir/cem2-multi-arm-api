@@ -1,0 +1,261 @@
+{
+    "arms": {
+        "": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "6": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "5": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "56": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "4": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "46": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "45": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "456": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "3": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "36": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "35": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "356": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "34": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "346": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "345": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "3456": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "2": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "26": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "25": {
+            "impressions": 1,
+            "actions": 1
+        },
+        "256": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "24": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "246": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "245": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "2456": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "23": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "236": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "235": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "2356": {
+            "impressions": 1,
+            "actions": 1
+        },
+        "234": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "2346": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "2345": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "23456": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "16": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "15": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "156": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "14": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "146": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "145": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1456": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "13": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "136": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "135": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "1356": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "134": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1346": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1345": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "13456": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "12": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "126": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "125": {
+            "impressions": 1,
+            "actions": 1
+        },
+        "1256": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "124": {
+            "impressions": 1,
+            "actions": 1
+        },
+        "1246": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1245": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "12456": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "123": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1236": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1235": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "12356": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "1234": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "12346": {
+            "impressions": 1,
+            "actions": 0
+        },
+        "12345": {
+            "impressions": 0,
+            "actions": 0
+        },
+        "123456": {
+            "impressions": 1,
+            "actions": 0
+        }
+    },
+    "t": 19
+}
