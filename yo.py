@@ -264,9 +264,13 @@ class RealArm:
     def get_id(tweaks: List[int]):
         return "".join(str(t) for t in tweaks)
 
-    def __init__(self, tweaks: List[int], impressions, actions):
-        self.tweaks = tweaks
-        self.id = __class__.get_id(tweaks)
+    @staticmethod
+    def get_tweaks_from_id(id: str):
+        return [int(e) for e in id]
+
+    def __init__(self, id, impressions, actions):
+        self.id = id
+        self.tweaks = __class__.get_tweaks_from_id(id)
         self.impressions = impressions
         self.actions = actions
 
@@ -364,24 +368,24 @@ def main():
     # old_t = states["t"]
     # pull_per_arm = 44
     # for t in range(old_t, old_t + pull_per_arm):
-        # states = [arm.get_state() for arm in arms]
+    # states = [arm.get_state() for arm in arms]
 
-        # probs_select_each_arm = agent.softmax(states, t, 2, 0.04)
-        # probs_select_each_arm = agent.equal_weights(states)
-        # probs_select_each_arm = agent.eps_greedy(states, t, 0.5, 0.4)
-        # probs_select_each_arm = agent.ucb(states, t)
+    # probs_select_each_arm = agent.softmax(states, t, 2, 0.04)
+    # probs_select_each_arm = agent.equal_weights(states)
+    # probs_select_each_arm = agent.eps_greedy(states, t, 0.5, 0.4)
+    # probs_select_each_arm = agent.ucb(states, t)
 
-        # selected_arm = np.random.choice(arms, p=probs_select_each_arm)
+    # selected_arm = np.random.choice(arms, p=probs_select_each_arm)
 
-        # print_probs(arms, probs_select_each_arm)
+    # print_probs(arms, probs_select_each_arm)
 
-        # result = selected_arm.pull()
-        # print(f"{t=} {selected_arm=} {result=}")
+    # result = selected_arm.pull()
+    # print(f"{t=} {selected_arm=} {result=}")
 
-    print(RealArm.get_stats())
+    # print(RealArm.get_stats())
 
-    for arm in sorted(arms, key=lambda a: a.get_rate()):
-        print(arm)
+    # for arm in sorted(arms, key=lambda a: a.get_rate()):
+    #     print(arm)
 
 
 if __name__ == "__main__":
