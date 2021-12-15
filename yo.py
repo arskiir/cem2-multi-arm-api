@@ -180,11 +180,12 @@ def main():
     agent = BanditAgent()
 
     old_t = states["t"]
+    start_t = old_t + 1
     pulls_per_arm = 1
-    for t in range(old_t, old_t + pulls_per_arm):
+    for t in range(start_t, start_t + pulls_per_arm):
         states = [arm.get_state() for arm in arms]
 
-        ## select arm based on probabilities
+        ## select an arm based on MAB policy
         # probs_select_each_arm = agent.softmax(states, t, 2, 0.01)
         # probs_select_each_arm = agent.equal_weights(states)
         # probs_select_each_arm = agent.eps_greedy(states, t, 0.5, 0.4)
@@ -198,8 +199,9 @@ def main():
         print_probs(arms, probs_select_each_arm, limit=5)
 
         ## pull the selected arm
+        # print(f"{t=} {selected_arm=} ", end="")
         # result = selected_arm.pull()
-        # print(f"{t=} {selected_arm=} {result=}")
+        # print(f"{result=}")
 
     ## print the overall statistics of MAB
     # print(RealArm.get_stats())
