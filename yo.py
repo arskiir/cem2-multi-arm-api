@@ -108,7 +108,7 @@ class RealArm:
     def __eq__(self, __o: object) -> bool:
         if not isinstance(__o, RealArm):
             return False
-        return self.id == __o.id
+        return sorted(self.tweaks) == sorted(__o.tweaks)
 
     def __repr__(self):
         return f"{self.tweaks}: rate={self.get_rate():.3f} impressions={self.impressions} actions={self.actions}"
@@ -161,8 +161,13 @@ def print_probs(
 
 
 def select_specific_arm(tweaks: List[int], arms: List[RealArm]) -> Union[RealArm, None]:
-    """Find and return the arm with the given tweaks. If no arm is found, return None."""
-    return next(filter(lambda arm: arm.tweaks == tweaks, arms), None)
+    """Find and return the arm with the given tweaks. If no arm is found, return None.
+
+    Args:
+        tweaks (List[int]): both [1,2,3] or [3,1,2], etc. results in the same arm
+    """
+    filter_key = lambda arm: arm == RealArm(RealArm.get_id(tweaks), 0, 0)
+    return next(filter(filter_key, arms), None)
 
 
 def main():
@@ -183,6 +188,7 @@ def main():
     start_t = old_t + 1
     pulls = 1
     for t in range(start_t, start_t + pulls):
+        # print(f"{t=} ", end="")
         states = [arm.get_state() for arm in arms]
 
         ## select an arm based on MAB policy
@@ -193,13 +199,13 @@ def main():
         # selected_arm = np.random.choice(arms, p=probs_select_each_arm)
 
         ## select a specific arm
-        # selected_arm = select_specific_arm([2, 6], arms)
+        # selected_arm = select_specific_arm([3, 1, 2], arms)
 
         ## show the probabilities of each arm being selected in the next pull
         print_probs(arms, probs_select_each_arm, limit=5)
 
         ## pull the selected arm
-        # print(f"{t=} {selected_arm=} ", end="")
+        # print(f"{selected_arm=} ", end="")
         # result = selected_arm.pull()
         # print(f"{result=}")
 
