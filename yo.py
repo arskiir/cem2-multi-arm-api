@@ -152,7 +152,7 @@ def print_probs(
     print_count = 0
     print("Probabilities of being selected of each arm in the next pull")
     for arm, prob in sorted(
-        zip(arms, probs_select_each_arm), key=lambda e: e[0].get_rate(), reverse=True
+        zip(arms, probs_select_each_arm), key=lambda e: e[1], reverse=True
     ):
         print(f"{prob=:.5f} {arm=}")
         print_count += 1
