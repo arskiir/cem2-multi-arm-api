@@ -7,11 +7,13 @@ import requests
 # define your BanditAgent class here or import from another file
 from BanditAgent import BanditAgent
 
+RewardList = List[Literal[1, 0]]
+
 
 class MABState(TypedDict):
     count: int
     cumulative_reward: int
-    reward_list: List[Union[Literal[1], Literal[0]]]
+    reward_list: RewardList
 
 
 class GetStatJson(TypedDict):
@@ -27,6 +29,12 @@ class ArmState(TypedDict):
 class States(TypedDict):
     arms: Dict[str, ArmState]
     t: int
+
+
+class PullResponseJson(TypedDict):
+    limit_reach: bool
+    request_reward: RewardList
+    status: int
 
 
 states_file = "./states.json"
@@ -84,14 +92,15 @@ class RealArm:
             states["t"] += 1
             json.dump(states, f, indent=4)
 
-    def pull(self):
-        self.impressions += 1
+    def pull(self, times: int = 1) -> PullResponseJson:
+        """Pull the arm for a given number of times defaulted to 1."""
+        self.impressions += times
         r = requests.post(
             "https://comengmath.herokuapp.com/update_state",
-            json={"times": 1, "arms": self.tweaks},
+            json={"times": times, "arms": self.tweaks},
             headers={"Authorization": __class__.token},
         )
-        result = json.loads(r.content)
+        result: PullResponseJson = json.loads(r.content)
         self.actions += sum(result["request_reward"])
         self.save_to_file()
         return result
