@@ -191,12 +191,6 @@ def get_states():
 
 
 def main():
-    # load states from file
-    # if states file doesn't exist, create it
-    if not os.path.exists(states_file):
-        with open(states_file, "w", encoding="utf-8") as f:
-            json.dump(create_default_states(), f, indent=4)
-
     states = get_states()
     arms = get_all_arms(states)
     agent = BanditAgent()
@@ -216,16 +210,16 @@ def main():
         # probs_select_each_arm = agent.ucb(states, t)
 
         # --- select an arm based on MAB policy ---#
-        selected_arm: RealArm = np.random.choice(arms, p=probs_select_each_arm)
+        # selected_arm: RealArm = np.random.choice(arms, p=probs_select_each_arm)
         # --- select a specific arm ---#
         # selected_arm = select_specific_arm([2, 6], arms)
 
         # --- show the probabilities of each arm being selected in the next pull ---#
-        # print_probs(arms, probs_select_each_arm, limit=5)
+        print_probs(arms, probs_select_each_arm, limit=5)
 
         # --- pull the selected arm ---#
-        result = selected_arm.pull(times=1)
-        print(f"{selected_arm=} {result=}")
+        # result = selected_arm.pull(times=1)
+        # print(f"{selected_arm=} {result=}")
 
     # print the overall statistics of MAB
     stats_state = RealArm.get_stats()["state"]
