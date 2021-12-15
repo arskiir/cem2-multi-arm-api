@@ -94,13 +94,15 @@ class RealArm:
 
     def pull(self, times: int = 1) -> PullResponseJson:
         """Pull the arm for a given number of times defaulted to 1."""
-        self.impressions += times
         r = requests.post(
             "https://comengmath.herokuapp.com/update_state",
             json={"times": times, "arms": self.tweaks},
             headers={"Authorization": __class__.token},
         )
         result: PullResponseJson = json.loads(r.content)
+        if result["limit_reach"]:
+            return result
+        self.impressions += times
         self.actions += sum(result["request_reward"])
         self.save_to_file()
         return result
@@ -170,6 +172,24 @@ def select_specific_arm(tweaks: List[int], arms: List[RealArm]) -> Union[RealArm
     return next(filter(filter_key, arms), None)
 
 
+def print_all_arms(arms: List[RealArm]):
+    for arm in sorted(arms, key=lambda a: a.get_rate()):
+        print(arm)
+
+
+def get_states():
+    # load states from file
+    # if states file doesn't exist, create it
+    if not os.path.exists(states_file):
+        with open(states_file, "w", encoding="utf-8") as f:
+            json.dump(create_default_states(), f, indent=4)
+
+    states: States = None
+    with open(states_file, encoding="utf-8") as f:
+        states = json.load(f)
+    return states
+
+
 def main():
     # load states from file
     # if states file doesn't exist, create it
@@ -177,43 +197,42 @@ def main():
         with open(states_file, "w", encoding="utf-8") as f:
             json.dump(create_default_states(), f, indent=4)
 
-    states = None
-    with open(states_file, encoding="utf-8") as f:
-        states = json.load(f)
-
+    states = get_states()
     arms = get_all_arms(states)
     agent = BanditAgent()
 
     old_t = states["t"]
     start_t = old_t + 1
+
     pulls = 1
+    # pulls = 50
     for t in range(start_t, start_t + pulls):
         # print(f"{t=} ", end="")
         states = [arm.get_state() for arm in arms]
 
-        ## select an arm based on MAB policy
-        # probs_select_each_arm = agent.softmax(states, t, 2, 0.01)
+        probs_select_each_arm = agent.softmax(states, t, 2, 0.05)
         # probs_select_each_arm = agent.equal_weights(states)
         # probs_select_each_arm = agent.eps_greedy(states, t, 0.5, 0.4)
-        probs_select_each_arm = agent.ucb(states, t)
-        # selected_arm = np.random.choice(arms, p=probs_select_each_arm)
+        # probs_select_each_arm = agent.ucb(states, t)
 
-        ## select a specific arm
-        # selected_arm = select_specific_arm([3, 1, 2], arms)
+        # --- select an arm based on MAB policy ---#
+        selected_arm: RealArm = np.random.choice(arms, p=probs_select_each_arm)
+        # --- select a specific arm ---#
+        # selected_arm = select_specific_arm([2, 6], arms)
 
-        ## show the probabilities of each arm being selected in the next pull
-        print_probs(arms, probs_select_each_arm, limit=5)
+        # --- show the probabilities of each arm being selected in the next pull ---#
+        # print_probs(arms, probs_select_each_arm, limit=5)
 
-        ## pull the selected arm
-        # print(f"{selected_arm=} ", end="")
-        # result = selected_arm.pull()
-        # print(f"{result=}")
+        # --- pull the selected arm ---#
+        result = selected_arm.pull(times=1)
+        print(f"{selected_arm=} {result=}")
 
-    ## print the overall statistics of MAB
-    # print(RealArm.get_stats())
+    # print the overall statistics of MAB
+    stats_state = RealArm.get_stats()["state"]
+    print(f'count={stats_state["count"]}, reward={stats_state["cumulative_reward"]}')
+    # print(f'The last 500 results: {sum(stats_state["reward_list"][500:])}')
 
-    # for arm in sorted(arms, key=lambda a: a.get_rate()):
-    #     print(arm)
+    print_all_arms(arms)
 
 
 if __name__ == "__main__":
