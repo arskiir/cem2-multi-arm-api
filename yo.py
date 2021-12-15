@@ -130,7 +130,7 @@ def get_all_possible_tweaks():
 
 
 def create_default_states():
-    default_states: States = {"arms": {}, "t": 0}
+    default_states: States = {"arms": {}, "t": -1}
     for tweak in get_all_possible_tweaks():
         id = RealArm.get_id(tweak)
         default_states["arms"][id] = {"impressions": 0, "actions": 0}
