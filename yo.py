@@ -143,11 +143,19 @@ def get_all_arms(states: States) -> List[RealArm]:
     ]
 
 
-def print_probs(arms: List[RealArm], probs_select_each_arm):
+def print_probs(
+    arms: List[RealArm], probs_select_each_arm: List[float], limit: int = None
+):
+    """Print the probabilities of being selected in the next pull from high to low of each arm with. If limit is specified, only print the first limit arms."""
+    print_count = 0
+    print("Probabilities of being selected of each arm in the next pull")
     for arm, prob in sorted(
-        zip(arms, probs_select_each_arm), key=lambda e: e[0].get_rate()
+        zip(arms, probs_select_each_arm), key=lambda e: e[0].get_rate(), reverse=True
     ):
-        print(f"prob_of_being_selected={prob:.2f} {arm=} ")
+        print(f"{prob=:.2f} {arm=}")
+        print_count += 1
+        if limit and print_count == limit:
+            break
 
 
 def select_specific_arm(tweaks: List[int], arms: List[RealArm]) -> Union[RealArm, None]:
@@ -185,7 +193,7 @@ def main():
         # selected_arm = select_specific_arm([2, 6], arms)
 
         ## show the probabilities of each arm being selected in the next pull
-        print_probs(arms, probs_select_each_arm)
+        print_probs(arms, probs_select_each_arm, limit=5)
 
         ## pull the selected arm
         # result = selected_arm.pull()
