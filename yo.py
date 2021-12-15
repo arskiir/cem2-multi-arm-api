@@ -111,24 +111,26 @@ class RealArm:
         return self.id == __o.id
 
     def __repr__(self):
-        return f"{self.tweaks}: rate={self.get_rate():.3f} {self.impressions=} {self.actions=}"
+        return f"{self.tweaks}: rate={self.get_rate():.3f} impressions={self.impressions} actions={self.actions}"
 
 
-def get_all_possible_tweaks() -> List[RealArm]:
-    arms = []
-    combination = [("000000" + ((str(bin(i)))[2:]))[-6:] for i in range(64)]
-    tweaks = [1, 2, 3, 4, 5, 6]
-    for each in combination:
-        selected_tweaks = [
-            tweak for tweak, select in zip(tweaks, each) if select == "1"
+def get_all_possible_tweaks():
+    number_of_arms = 64
+    tweak_combinations: List[List[int]] = []
+    tweak_enable_combinations = [
+        ("000000" + ((str(bin(i)))[2:]))[-6:] for i in range(number_of_arms)
+    ]
+    tweak_options = [1, 2, 3, 4, 5, 6]
+    for enable in tweak_enable_combinations:
+        enabled_tweaks = [
+            tweak for tweak, select in zip(tweak_options, enable) if select == "1"
         ]
-
-        arms.append(selected_tweaks)
-    return arms
+        tweak_combinations.append(enabled_tweaks)
+    return tweak_combinations
 
 
 def create_default_states():
-    default_states = {"arms": {}, "t": 0}
+    default_states: States = {"arms": {}, "t": 0}
     for tweak in get_all_possible_tweaks():
         id = RealArm.get_id(tweak)
         default_states["arms"][id] = {"impressions": 0, "actions": 0}
@@ -152,7 +154,7 @@ def print_probs(
     for arm, prob in sorted(
         zip(arms, probs_select_each_arm), key=lambda e: e[0].get_rate(), reverse=True
     ):
-        print(f"{prob=:.2f} {arm=}")
+        print(f"{prob=:.5f} {arm=}")
         print_count += 1
         if limit and print_count == limit:
             break
