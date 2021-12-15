@@ -54,7 +54,7 @@ class RealArm:
         return [int(e) for e in id]
 
     def __init__(self, id: str, impressions: int, actions: int):
-        """Initialize a new arm with a given id that is represents a set of tweaks, impressions and actions.
+        """Initialize a new arm with a given id that represents a set of tweaks, impressions and actions.
         Args:
             id: String concatenation of tweaks.
             impressions: Total number of pulls on this arm.
