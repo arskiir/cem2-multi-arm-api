@@ -181,8 +181,8 @@ def main():
 
     old_t = states["t"]
     start_t = old_t + 1
-    pulls_per_arm = 1
-    for t in range(start_t, start_t + pulls_per_arm):
+    pulls = 1
+    for t in range(start_t, start_t + pulls):
         states = [arm.get_state() for arm in arms]
 
         ## select an arm based on MAB policy
